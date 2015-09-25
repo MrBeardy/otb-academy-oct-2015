@@ -1,24 +1,24 @@
 RSpec.describe "Open Classes" do
-  class Dog
+  class OpenClassesDog
     def bark
       "WOOF"
     end
   end
 
   it "barks as defined" do
-    fido = Dog.new
+    fido = OpenClassesDog.new
     expect( fido.bark ).to eq( "WOOF" )
   end
 
-  # Open the existing Dog class and add a new method.
-  class Dog
+  # Open the existing OpenClassesDog class and add a new method.
+  class OpenClassesDog
     def wag
       "HAPPY"
     end
   end
 
   it "can now wag too" do
-    fido = Dog.new
+    fido = OpenClassesDog.new
     expect( fido.wag ).to eq( "HAPPY" )
     expect( fido.bark ).to eq( "WOOF" )
   end

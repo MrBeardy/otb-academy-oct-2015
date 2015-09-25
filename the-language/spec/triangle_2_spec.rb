@@ -1,6 +1,6 @@
 require 'triangle'
 
-RSpec.describe "handling errors" do
+RSpec.describe "handling errors", pending: true do
   # The first triangle spec did not deal with handling errors.
   # Let's do that part now.
   it "throws errors for illegal triangles" do

@@ -1,5 +1,5 @@
 RSpec.describe "inheritance" do
-  class Dog
+  class InheritanceDog
     attr_reader :name
 
     def initialize(name)
@@ -11,7 +11,7 @@ RSpec.describe "inheritance" do
     end
   end
 
-  class Chihuahua < Dog
+  class Chihuahua < InheritanceDog
     def wag
       :happy
     end
@@ -22,7 +22,7 @@ RSpec.describe "inheritance" do
   end
 
   it "sets the subclass parent as an ancestor" do
-    expect( Chihuahua.ancestors.include?(Dog) ).to eq( true )
+    expect( Chihuahua.ancestors.include?(InheritanceDog) ).to eq( true )
   end
 
   it "will ultimately inherit from Object" do
@@ -31,7 +31,7 @@ RSpec.describe "inheritance" do
 
   it "inherits behaviour from a parent class" do
     chico = Chihuahua.new("Chico")
-    expect( chico.name ).to eq( "Chico" )
+    expect( chico.name ).to eq( 'Chico' )
   end
 
   it "can add behaviour in subclass, not in a parent class" do
@@ -39,7 +39,7 @@ RSpec.describe "inheritance" do
     expect( chico.wag ).to eq( :happy )
 
     expect {
-      fido = Dog.new("Fido")
+      fido = InheritanceDog.new("Fido")
       fido.wag
     }.to raise_error( NoMethodError )
   end
@@ -48,11 +48,11 @@ RSpec.describe "inheritance" do
     chico = Chihuahua.new("Chico")
     expect( chico.bark ).to eq( 'yip' )
 
-    fido = Dog.new("Fido")
-    expect( fido.bark ).to eq( "WOOF" )
+    fido = InheritanceDog.new("Fido")
+    expect( fido.bark ).to eq( 'WOOF' )
   end
 
-  class BullDog < Dog
+  class BullDog < InheritanceDog
     def bark
       super + ", GROWL"
     end
@@ -60,10 +60,10 @@ RSpec.describe "inheritance" do
 
   it "can invoke the parent behaviour using super" do
     ralph = BullDog.new("Ralph")
-    expect( ralph.bark ).to eq( "WOOF, GROWL" )
+    expect( ralph.bark ).to eq( 'WOOF, GROWL' )
   end
 
-  class GreatDane < Dog
+  class GreatDane < InheritanceDog
     def growl
       super.bark + ", GROWL"
     end

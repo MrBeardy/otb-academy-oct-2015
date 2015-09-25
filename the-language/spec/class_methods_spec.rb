@@ -1,31 +1,31 @@
 RSpec.describe "Class methods" do
-  class Dog
+  class CMDog
   end
 
   it "all objects are Objects" do
-    fido = Dog.new
+    fido = CMDog.new
     expect( fido.is_a?(Object) ).to eq( true )
   end
 
   it "all classes are Classes" do
-    expect( Dog.is_a?(Class) ).to eq( true )
+    expect( CMDog.is_a?(Class) ).to eq( true )
   end
 
   it "classes are objects too" do
-    expect( Dog.is_a?(Object) ).to eq( true )
+    expect( CMDog.is_a?(Object) ).to eq( true )
   end
 
   it "has methods on objects" do
-    fido = Dog.new
+    fido = CMDog.new
     expect( fido.methods.size > 0 ).to eq( true )
   end
 
   it "has methods on classes" do
-    expect( Dog.methods.size > 0 ).to eq( true )
+    expect( CMDog.methods.size > 0 ).to eq( true )
   end
 
   it "is possible to define a method on an individual object" do
-    fido = Dog.new
+    fido = CMDog.new
     def fido.wag
       :fidos_wag
     end
@@ -33,8 +33,8 @@ RSpec.describe "Class methods" do
   end
 
   it "does not affect other objects with singleton methods" do
-    fido = Dog.new
-    rover = Dog.new
+    fido = CMDog.new
+    rover = CMDog.new
     def fido.wag
       :fidos_wag
     end
@@ -44,52 +44,52 @@ RSpec.describe "Class methods" do
     }.to raise_error( NoMethodError )
   end
 
-  class Dog2
+  class CMDog2
     def wag
       :instance_level_wag
     end
   end
 
-  def Dog2.wag
+  def CMDog2.wag
     :class_level_wag
   end
 
   it "is possible to define singleton methods on classes too, because they are objects" do
-    expect( Dog2.wag ).to eq( :class_level_wag )
+    expect( CMDog2.wag ).to eq( :class_level_wag )
   end
 
   it "keeps class and instance methods indepedent" do
-    fido = Dog2.new
+    fido = CMDog2.new
     expect( fido.wag ).to eq( :instance_level_wag )
-    expect( Dog2.wag ).to eq( :class_level_wag )
+    expect( CMDog2.wag ).to eq( :class_level_wag )
   end
 
-  class Dog
+  class CMDog
     attr_accessor :name
   end
 
-  def Dog.name
+  def CMDog.name
     @name
   end
 
   it "does not share instance variables between classes and instances" do
-    fido = Dog.new
+    fido = CMDog.new
     fido.name = "Fido"
     expect( fido.name ).to eq( "Fido" )
-    expect( Dog.name ).to eq( nil )
+    expect( CMDog.name ).to eq( nil )
   end
 
-  class Dog
-    def Dog.a_class_method
-      :dogs_class_method
+  class CMDog
+    def CMDog.a_class_method
+      :CMDogs_class_method
     end
   end
 
   it "is possible to define a class method inside the class" do
-    expect( Dog.a_class_method ).to eq( :dogs_class_method )
+    expect( CMDog.a_class_method ).to eq( :CMDogs_class_method )
   end
 
-  LastExpressionInClassStatement = class Dog
+  LastExpressionInClassStatement = class CMDog
                                      21
                                    end
 
@@ -97,25 +97,25 @@ RSpec.describe "Class methods" do
     expect( LastExpressionInClassStatement ).to eq( 21 )
   end
 
-  SelfInsideOfClassStatement = class Dog
+  SelfInsideOfClassStatement = class CMDog
                                  self
                                end
 
   it "uses self to refer to the class, not an instance inside the class statement" do
-    expect( Dog == SelfInsideOfClassStatement ).to eq( true )
+    expect( CMDog == SelfInsideOfClassStatement ).to eq( true )
   end
 
-  class Dog
+  class CMDog
     def self.class_method2
       :another_way_to_write_class_methods
     end
   end
 
   it "is possible to use self to define a class method" do
-    expect( Dog.class_method2 ).to eq( :another_way_to_write_class_methods )
+    expect( CMDog.class_method2 ).to eq( :another_way_to_write_class_methods )
   end
 
-  class Dog
+  class CMDog
     class << self
       def another_class_method
         :still_another_way
@@ -124,7 +124,7 @@ RSpec.describe "Class methods" do
   end
 
   it "has a third way to define a class method" do
-    expect( Dog.another_class_method ).to eq( :still_another_way )
+    expect( CMDog.another_class_method ).to eq( :still_another_way )
   end
 
   # THINK ABOUT IT:
@@ -146,7 +146,7 @@ RSpec.describe "Class methods" do
   # ------------------------------------------------------------------
 
   it "has an easy way to call class methods from instance methods" do
-    fido = Dog.new
+    fido = CMDog.new
 
     def fido.instance_method
       self.class.another_class_method
