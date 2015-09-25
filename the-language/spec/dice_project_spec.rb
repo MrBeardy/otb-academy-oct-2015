@@ -5,7 +5,7 @@
 # end
 #
 
-RSpec.describe "dice set" do
+RSpec.describe "dice set", pending: true do
   it "can create a new sice set" do
     dice = DiceSet.new
     expect( dice ).not_to be_nil
