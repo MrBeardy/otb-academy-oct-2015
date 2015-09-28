@@ -30,7 +30,7 @@ describe "singing 99 bottles of beer" do
   end
 
   it "can string a few verses together" do
-    expected = "8 bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, one six-pack of beer on the wall.\n\nOne six-pack of beer on the wall, one six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
+    expected = "8 bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, 1 six-pack of beer on the wall.\n\n1 six-pack of beer on the wall, 1 six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
     expect( song.verses(8, 6) ).to eq( expected )
   end
 
@@ -39,7 +39,12 @@ describe "singing 99 bottles of beer" do
   end
 
   it "can use 'six-pack' as the bottle names when dealing with 6 bottles" do
-    expected = "7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, one six-pack of beer on the wall.\n\nOne six-pack of beer on the wall, one six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
+    expected = "7 bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, 1 six-pack of beer on the wall.\n\n1 six-pack of beer on the wall, 1 six-pack of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n"
     expect( song.verses( 7, 6 ) ).to eq( expected )
+  end
+
+  it "can accept multiples of 6 and output multiple six-packs." do
+    expected = "2 six-packs of beer on the wall, 2 six-packs of beer.\nTake one down and pass it around, 11 bottles of beer on the wall.\n\n11 bottles of beer on the wall, 11 bottles of beer.\nTake one down and pass it around, 10 bottles of beer on the wall.\n\n10 bottles of beer on the wall, 10 bottles of beer.\nTake one down and pass it around, 9 bottles of beer on the wall.\n\n"
+    expect( song.verses( 12, 10 ) ).to eq( expected )
   end
 end

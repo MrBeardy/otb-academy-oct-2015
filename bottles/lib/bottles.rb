@@ -3,7 +3,7 @@ class Bottles
     bottles = BottleNumber.for(num)
     bottles_next = BottleNumber.for(bottles.decrement)
 
-    "#{bottles.first_sentence.capitalize} on the wall, #{bottles.first_sentence}.\n" +
+    "#{bottles.bottles_remaining.capitalize} of beer on the wall, #{bottles.bottles_remaining} of beer.\n" +
     "#{bottles.action}, #{bottles_next.bottles_remaining} of beer on the wall.\n"
   end
 
@@ -35,13 +35,11 @@ class Bottles
         BottleNumberOne.new(num)
       elsif num == 6
         BottleNumberSix.new(num)
+      elsif (num % 6) == 0 && num > 0
+        BottleNumberMultiplesOfSix.new(num)
       else
         BottleNumber.new(num)
       end
-    end
-
-    def first_sentence
-      "#{bottles_remaining} of beer"
     end
 
     def no_more
@@ -69,28 +67,6 @@ class Bottles
     end
   end
 
-  #  ONE
-  class BottleNumberOne < BottleNumber
-    def bottles_or_bottle
-      "bottle"
-    end
-
-    def it_or_one
-      "it"
-    end
-  end
-
-  #  SIX
-  class BottleNumberSix < BottleNumber
-    def first_sentence
-      "one six-pack of beer"
-    end
-
-    def bottles_remaining
-      "one six-pack"
-    end
-  end
-
   #  ZERO
   class BottleNumberZero < BottleNumber
     def action
@@ -103,6 +79,31 @@ class Bottles
 
     def decrement
       99
+    end
+  end
+
+  #  ONE
+  class BottleNumberOne < BottleNumber
+    def bottles_or_bottle
+      "bottle"
+    end
+
+    def it_or_one
+      "it"
+    end
+  end
+
+  #  MULTIPLES OF SIX
+  class BottleNumberSix < BottleNumber
+    def bottles_remaining
+      "1 six-pack"
+    end
+  end
+
+  #  MULTIPLES OF SIX
+  class BottleNumberMultiplesOfSix < BottleNumber
+    def bottles_remaining
+      "#{@num / 6} six-packs"
     end
   end
 end
