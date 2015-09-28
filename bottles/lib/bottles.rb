@@ -1,15 +1,15 @@
 class Bottles
-    def verse(num)
-        if num > 2
-            "#{num} bottles of beer on the wall, #{num} bottles of beer.\nTake one down and pass it around, #{num-1} bottles of beer on the wall.\n"
-    elsif num == 2
-      "#{num} bottles of beer on the wall, #{num} bottles of beer.\nTake one down and pass it around, #{num-1} bottle of beer on the wall.\n"
-    elsif num == 1
-      "#{num} bottle of beer on the wall, #{num} bottle of beer.\nTake it down and pass it around, no more bottles of beer on the wall.\n"
-    else
-      "No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n"
-    end
-    end
+  def verse(num)
+    "#{pluralize(num).capitalize} of beer on the wall, #{pluralize num} of beer.\n#{outcome num}, #{pluralize(next_num(num))} of beer on the wall.\n"
+  end
+
+  def sing
+    verses(max_num, 0)
+  end
+
+  def max_num
+    99
+  end
 
   def verses(num, num2)
     result = ""
@@ -19,7 +19,45 @@ class Bottles
     result
   end
 
-  def sing
-    verses(99,0)
+  private
+
+  def outcome(num)
+    if (num >= 1)
+      "Take #{article num} down and pass it around"
+    else
+      "Go to the store and buy some more"
+    end
+  end
+
+  def article(num)
+    if (num > 1)
+      "one"
+    else
+      "it"
+    end
+  end
+
+  def noun(num)
+    if (num == 1)
+      "bottle"
+    else
+      "bottles"
+    end
+  end
+
+  def next_num(num)
+    if (num < 1)
+      max_num
+    else
+      num - 1
+    end
+  end
+
+  def pluralize(num)
+    if (num == 0)
+      "no more #{noun num}"
+    else
+      "#{num} #{noun num}"
+    end
   end
 end
