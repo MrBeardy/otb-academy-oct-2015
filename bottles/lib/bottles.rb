@@ -1,23 +1,25 @@
 class Bottles
-  attr_accessor :verses
+    def verse(num)
+        if num > 2
+            "#{num} bottles of beer on the wall, #{num} bottles of beer.\nTake one down and pass it around, #{num-1} bottles of beer on the wall.\n"
+    elsif num == 2
+      "#{num} bottles of beer on the wall, #{num} bottles of beer.\nTake one down and pass it around, #{num-1} bottle of beer on the wall.\n"
+    elsif num == 1
+      "#{num} bottle of beer on the wall, #{num} bottle of beer.\nTake it down and pass it around, no more bottles of beer on the wall.\n"
+    else
+      "No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n"
+    end
+    end
 
-  def verses(*verse_indexes)
-    @verses ||= []
-    @verses[*verse_indexes]
+  def verses(num, num2)
+    result = ""
+    num.downto(num2).each do |v|
+      result += self.verse(v) + "\n"
+    end
+    result
   end
 
-  def verse(bottle_count)
-    last_phrase = "No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n"
-
-    return last_phrase if (bottle_count <= 0)
-
-    deducted = bottle_count - 1
-
-    last = deducted == 0 ? "no more" : deducted;
-    word = (bottle_count == 0 || bottle_count > 1) ? "bottles" : "bottle"
-    last_word = (deducted == 0 || deducted > 1) ? "bottles" : "bottle"
-    it_or_one = (bottle_count == 1) ? "it" : "one"
-
-    "#{bottle_count} #{word} of beer on the wall, #{bottle_count} #{word} of beer.\nTake #{it_or_one} down and pass it around, #{last} #{last_word} of beer on the wall.\n"
+  def sing
+    verses(99,0)
   end
 end
