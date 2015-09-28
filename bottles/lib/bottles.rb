@@ -3,8 +3,8 @@ class Bottles
     bottles = BottleNumber.for(num)
     bottles_next = BottleNumber.for(bottles.decrement)
 
-    "#{bottles.no_more.capitalize} #{bottles.bottles_or_bottle} of beer on the wall, #{bottles.no_more} #{bottles.bottles_or_bottle} of beer.\n" +
-    "#{bottles.action}, #{bottles_next.no_more} #{bottles_next.bottles_or_bottle} of beer on the wall.\n"
+    "#{bottles.first_sentence.capitalize} on the wall, #{bottles.first_sentence}.\n" +
+    "#{bottles.action}, #{bottles_next.bottles_remaining} of beer on the wall.\n"
   end
 
   def verses(num, num2)
@@ -33,9 +33,15 @@ class Bottles
         BottleNumberZero.new(num)
       elsif num == 1
         BottleNumberOne.new(num)
+      elsif num == 6
+        BottleNumberSix.new(num)
       else
         BottleNumber.new(num)
       end
+    end
+
+    def first_sentence
+      "#{bottles_remaining} of beer"
     end
 
     def no_more
@@ -47,7 +53,7 @@ class Bottles
     end
 
     def bottles_remaining
-      "#{bottles_next.no_more} #{bottles_next.bottles_or_bottle}"
+      "#{no_more} #{bottles_or_bottle}"
     end
 
     def action
@@ -63,6 +69,7 @@ class Bottles
     end
   end
 
+  #  ONE
   class BottleNumberOne < BottleNumber
     def bottles_or_bottle
       "bottle"
@@ -73,6 +80,18 @@ class Bottles
     end
   end
 
+  #  SIX
+  class BottleNumberSix < BottleNumber
+    def first_sentence
+      "one six-pack of beer"
+    end
+
+    def bottles_remaining
+      "one six-pack"
+    end
+  end
+
+  #  ZERO
   class BottleNumberZero < BottleNumber
     def action
       "Go to the store and buy some more"
