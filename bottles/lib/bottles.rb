@@ -1,7 +1,7 @@
 class Bottles
   def verse(num)
-    bottles = BottleNumber.new(num)
-    bottles_next = BottleNumber.new(bottles.decrement)
+    bottles = BottleNumber.for(num)
+    bottles_next = BottleNumber.for(bottles.decrement)
 
     "#{bottles.no_more.capitalize} #{bottles.bottles_or_bottle} of beer on the wall, #{bottles.no_more} #{bottles.bottles_or_bottle} of beer.\n" +
     "#{bottles.action}, #{bottles_next.no_more} #{bottles_next.bottles_or_bottle} of beer on the wall.\n"
@@ -28,12 +28,21 @@ class Bottles
       @num = num
     end
 
+    def self.for(num)
+      if num == 0
+        BottleNumberZero.new(num)
+      elsif num == 1
+        BottleNumberOne.new(num)
+      else
+        BottleNumber.new(num)
+      end
+    end
+
     def no_more
-      @num == 0 ? "no more" : @num.to_s
+      @num.to_s
     end
 
     def decrement
-      return 99 if @num == 0
       @num - 1
     end
 
@@ -42,24 +51,39 @@ class Bottles
     end
 
     def action
-      if @num == 0
-        "Go to the store and buy some more"
-      else
-        "Take #{it_or_one} down and pass it around"
-      end
+      "Take #{it_or_one} down and pass it around"
     end
 
-    def bottles_or_bottle_dec
-      (@num-1) == 1 ? "bottle" : "bottles"
-    end
-
-    # NOTE: Depends on differing values so requires changes in state.
     def bottles_or_bottle
-      @num == 1 ? "bottle" : "bottles"
+      "bottles"
     end
 
     def it_or_one
-      @num == 1 ? "it" : "one"
+      "one"
+    end
+  end
+
+  class BottleNumberOne < BottleNumber
+    def bottles_or_bottle
+      "bottle"
+    end
+
+    def it_or_one
+      "it"
+    end
+  end
+
+  class BottleNumberZero < BottleNumber
+    def action
+      "Go to the store and buy some more"
+    end
+
+    def no_more
+      "no more"
+    end
+
+    def decrement
+      99
     end
   end
 end
