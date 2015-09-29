@@ -52,24 +52,19 @@ RSpec.describe "tyre pressure alarm" do
 
   context("notifiers",  notifiers: true) do
     it "should initially return true for .normal_range" do
-      sensor = double("Sensor", sample_pressure: PASSING_PRESSURE)
-      notifier = Notifier.new
+      passing_sensor = double("Sensor", sample_pressure: PASSING_PRESSURE)
+      notifier = double("notifier")
 
-      alarm = Alarm.new(sensor, notifier)
-      alarm.check
-
-      expect( alarm.notifier.normal_range ).to be true
+      expect( notifier ).to receive(:normal_range)
+      alarm = Alarm.new(passing_sensor, notifier).check
     end
 
     it "should set .out_of_bounds to true when out of range" do
-      sensor = double("Sensor", sample_pressure: HIGH_PRESSURE)
-      notifier = Notifier.new
+      failing_sensor = double("Sensor", sample_pressure: HIGH_PRESSURE)
+      notifier = double("notifier")
 
-      alarm = Alarm.new(sensor, notifier)
-      alarm.check
-
-      expect( alarm.notifier.out_of_bounds ).to be true
-      expect( alarm.notifier.normal_range  ).to be false
+      expect( notifier ).to receive(:out_of_bounds)
+      alarm = Alarm.new(failing_sensor, notifier).check
     end
   end
 end
