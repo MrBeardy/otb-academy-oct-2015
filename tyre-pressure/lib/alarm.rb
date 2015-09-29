@@ -35,15 +35,13 @@ class Alarm
   end
 
   def check()
-    pressure = @sensor.sample_pressure
-
-    if (17.5 .. 21).include? pressure
+    if (17.5 .. 21).include? @sensor.sample_pressure
       @is_on = false
     else
       @is_on = true
     end
 
-    pressure
+    self
   end
 
   def on?
